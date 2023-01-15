@@ -66,7 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{676A45BF-6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextRpg001", "TextRpg001\TextRpg001.csproj", "{A0BC7BC1-E968-4C8F-A524-510FAC7E4728}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "16This", "16\16This.csproj", "{AC7DFC35-F748-44D3-8BAD-FC8E25B67C97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "16This", "16This\16This.csproj", "{AC7DFC35-F748-44D3-8BAD-FC8E25B67C97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
