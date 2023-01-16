@@ -4,15 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// 코드 재활용성이 떨어진다는 표현을 사용하게 된다.
+// 이 코드 재활용성을 향상시키기 위한 문법이.
+// 상속이다.
+
 // 클래스는 왠만하면 자기의 일은 스스로하자.
 // 캡슐화
-class Player
+class FightUnit
 {
-    int AT = 10 ;
-    int HP = 50 ;
-    int MAXHP = 100 ;
+    protected string Name = "None";
+    protected int AT = 10;
+    protected int HP = 50;
+    protected int MAXHP = 100;
+    public void StatusRender()
+    {
+        Console.Write(Name);
+        Console.WriteLine("의 능력치 --------------------------");
+        Console.Write("공격력 : ");
+        Console.WriteLine(AT);
+        // 체력 : 50/500
+        Console.Write("체력 : ");
+        Console.Write(HP);
+        Console.Write("/");
+        Console.WriteLine(MAXHP);
+        Console.WriteLine("---------------------------------------");
+    }
+}
 
-    public void PrintHP() 
+class Player : FightUnit
+{
+    public void PrintHP()
     {
         // 그 객체의 맴버변수와 관련된 코드를 2번 이상 치면
         // 함수로 만들어라.
@@ -41,23 +62,28 @@ class Player
         }
     }
 
-    public void StatusRender() 
+    public Player()
     {
-        Console.WriteLine("---------------------------------------");
-        Console.Write("공격력 : ");
-        Console.WriteLine(AT);
-        // 체력 : 50/500
-        Console.Write("체력 : ");
-        Console.Write(HP);
-        Console.Write("/");
-        Console.WriteLine(MAXHP);
-        Console.WriteLine("---------------------------------------");
+
+    }
+
+    public Player(string _Name)
+    {
+        this.Name = _Name;
     }
 }
 
-class Monster
+class Monster : FightUnit
 {
+    public Monster()
+    {
 
+    }
+
+    public Monster(string _Name)
+    {
+        this.Name = _Name;
+    }
 }
 
 enum STARTSELECT
@@ -103,9 +129,9 @@ namespace TextRpg001
             ConsoleKeyInfo CKI = Console.ReadKey();
             Console.WriteLine("");
 
-            switch (CKI.Key) 
+            switch (CKI.Key)
             {
-                
+
                 case ConsoleKey.D1:
                     Console.WriteLine("마을로 이동합니다.");
                     Console.ReadKey();
@@ -125,32 +151,31 @@ namespace TextRpg001
         {
             while (true)
             {
-                Console.Clear() ;
+                Console.Clear();
                 _Player.StatusRender();
                 Console.WriteLine("마을에서 무슨일을 하시겠습니까?");
                 Console.WriteLine("1. 체력을 회복한다.");
                 Console.WriteLine("2. 무기를 강화한다.");
                 Console.WriteLine("3. 마을을 나간다. ");
-                
+
                 // 초반에 프로그래밍의 전부.
                 // 객체(클래스)를 선언해야 할떄
                 // 함수의 분기
                 // 함수를 합칠때와 쪼갤때.
 
-            // ConsoleKeyInfo CKI = Console.ReadKey();
+                // ConsoleKeyInfo CKI = Console.ReadKey();
 
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.D1:
-                        //if (HP가 만피가 아니라면)
+                        //if (hp가 만피가 아니라면)
                         //{
-                        //_Player.HP = _Player.MAXHP;
-                        // 이 안의 내용을 채우면 됩니다.
-                        // 체력 100 회복 시키기.
                         _Player.MaxHeal();
-                        //} else {
+                        //}
+                        //else
+                        //{
                         // 경고문
-                        // }
+                        //}
                         break;
                     case ConsoleKey.D2:
                         break;
@@ -161,10 +186,20 @@ namespace TextRpg001
             }
         }
 
-        static void Battle()
+        static void Battle(Player _Player)
         {
-            Console.WriteLine("아직 개장하지 않았습니다.");
-            Console.ReadKey();
+            //Console.WriteLine("아직 개장하지 않았습니다.");
+            //Console.ReadKey();
+
+            Monster NewMonster = new Monster("몬스터");
+
+            while (/*둘중 누군가 죽을때까지*/true)
+            {
+                Console.Clear();
+                _Player.StatusRender();
+                NewMonster.StatusRender();
+                Console.ReadKey();
+            }
         }
 
         static void Main(string[] args)
@@ -180,7 +215,7 @@ namespace TextRpg001
 
             // 첫번째 static
             // 
-            Player NewPlyaer = new Player();
+            Player NewPlayer = new Player("플레이어");
 
             while (true)
             {
@@ -192,10 +227,10 @@ namespace TextRpg001
                 switch (SelectCheck)
                 {
                     case STARTSELECT.SELECTTOWN:
-                        Town(NewPlyaer);
+                        Town(NewPlayer);
                         break;
                     case STARTSELECT.SELECTBATTLE:
-                        Battle();
+                        Battle(NewPlayer);
                         break;
                 }
             }
