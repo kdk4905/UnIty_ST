@@ -69,7 +69,7 @@ class Player : FightUnit
 
     public Player(string _Name)
     {
-        this.Name = _Name;
+        Name = _Name;
     }
 }
 
@@ -80,9 +80,10 @@ class Monster : FightUnit
 
     }
 
+    // 인자값을 만들어 줄수도 있다.
     public Monster(string _Name)
     {
-        this.Name = _Name;
+        Name = _Name;
     }
 }
 
@@ -198,6 +199,15 @@ namespace TextRpg001
                 Console.Clear();
                 _Player.StatusRender();
                 NewMonster.StatusRender();
+                // 1. 죽을때까지 싸우게 만들어라.
+                // 1-1. 권장 플레이어한대 몬스터한대
+                // 2. 한쪽이 죽으면(나간다) 마을로 자동이송. 빠져나온다.
+                // 2-1.
+                // 2-2.
+                // 가장 기본적인것이 되면
+                // 그다음부터 하세요.
+                // 가장 단순한 부분부터 만들어가라.
+                // 싸우게 만들어보세요.
                 Console.ReadKey();
             }
         }
