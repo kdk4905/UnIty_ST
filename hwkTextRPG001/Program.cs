@@ -16,6 +16,7 @@ class FightUnit
     protected int AT = 10;
     protected int HP = 50;
     protected int MAXHP = 100;
+    protected bool IsDead = false;
     public void StatusRender()
     {
         Console.Write(Name);
@@ -28,6 +29,37 @@ class FightUnit
         Console.Write("/");
         Console.WriteLine(MAXHP);
         Console.WriteLine("---------------------------------------");
+    }
+
+    public bool Fight(FightUnit _Unit1, FightUnit _Unit2)
+    {
+        IsDead = false;
+        if (_Unit1.HP != 0 && _Unit2.HP != 0)
+        {
+            Console.WriteLine(_Unit1.Name + "의 공격!");
+            Console.WriteLine(_Unit2.Name + "은(는) " + _Unit1.AT + "의 피해를 입었다!");
+            _Unit2.HP -= _Unit1.AT;
+            Console.ReadKey();
+            if (_Unit2.HP != 0)
+            {
+                Console.WriteLine(_Unit2.Name + "의 공격!");
+                Console.WriteLine(_Unit1.Name + "은(는) " + _Unit1.AT + "의 피해를 입었다!");
+                _Unit1.HP -= _Unit2.AT;
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine(_Unit2.Name + "이(가) 쓰러졌다.");
+                Console.WriteLine(_Unit1.Name + "의 승리!!");
+                IsDead = true;
+                Console.ReadKey();
+            }
+        }
+        else
+        {
+            IsDead = true;
+        }
+        return IsDead;
     }
 }
 
@@ -208,7 +240,25 @@ namespace TextRpg001
                 // 그다음부터 하세요.
                 // 가장 단순한 부분부터 만들어가라.
                 // 싸우게 만들어보세요.
-                Console.ReadKey();
+                bool battleStatus = _Player.Fight(_Player, NewMonster);
+                if (battleStatus != true)
+                {
+                    Console.WriteLine("배틀이 아직 끝나지 않았다!");
+                }
+                else
+                {
+                    Console.WriteLine("배틀을 종료합니다.");
+                    Console.WriteLine("마을로 돌아가시겠습니까? Y/N");
+                    if (Console.ReadKey().Key == ConsoleKey.Y)
+                    {
+                        Town(_Player);
+                        break;
+                    }
+                    else if (Console.ReadKey().Key == ConsoleKey.N)
+                    {
+                        break;
+                    }
+                }
             }
         }
 
