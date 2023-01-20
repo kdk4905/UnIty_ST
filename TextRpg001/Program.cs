@@ -16,6 +16,19 @@ class FightUnit
     protected int AT = 10;
     protected int HP = 50;
     protected int MAXHP = 100;
+
+    public bool IsDeath() 
+    {
+        // A = 100
+        // 100 = A
+        
+        // 함수도 연산자에 가깝다.
+        // 결과값이 있다.
+        // bool boolDeath = HP <= 0;
+        // 연산자도 함수에 가깝다고 했다.
+        return HP <=0;
+    }
+
     public void StatusRender()
     {
         Console.Write(Name);
@@ -194,22 +207,22 @@ namespace TextRpg001
 
             Monster NewMonster = new Monster("몬스터");
 
-            while (/*둘중 누군가 죽을때까지*/true)
+            // 객체지향
+            // 객체를 지향해서 사용한다.
+
+            // true || false;
+            // _Player.IsDeath()
+
+            while (NewMonster.IsDeath() || _Player.IsDeath())
             {
                 Console.Clear();
                 _Player.StatusRender();
                 NewMonster.StatusRender();
-                // 1. 죽을때까지 싸우게 만들어라.
-                // 1-1. 권장 플레이어한대 몬스터한대
-                // 2. 한쪽이 죽으면(나간다) 마을로 자동이송. 빠져나온다.
-                // 2-1. 그냥나간다.
-                // 2-2. 마을로 나간다.
-                // 가장 기본적인것이 되면
-                // 그다음부터 하세요.
-                // 가장 단순한 부분부터 만들어가라.
-                // 싸우게 만들어보세요.
                 Console.ReadKey();
             }
+
+            Console.WriteLine("싸움이 결판 났습니다.");
+            Console.ReadKey();
         }
 
         static void Main(string[] args)
