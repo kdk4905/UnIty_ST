@@ -42,6 +42,16 @@ class FightUnit
         Console.WriteLine(MAXHP);
         Console.WriteLine("---------------------------------------");
     }
+
+    public void Damage(FightUnit _OhterUnit) 
+    {
+        Console.Write(Name);
+        Console.Write("가 ");
+        Console.Write(_OhterUnit.AT);
+        Console.WriteLine("의 데미지를 입었습니다.");
+        Console.ReadKey();
+        HP -= _OhterUnit.AT;
+    }
 }
 
 class Player : FightUnit
@@ -161,7 +171,7 @@ namespace TextRpg001
             }
         }
 
-        static void Town(Player _Player)
+        static STARTSELECT Town(Player _Player)
         {
             while (true)
             {
@@ -194,13 +204,13 @@ namespace TextRpg001
                     case ConsoleKey.D2:
                         break;
                     case ConsoleKey.D3:
-                        return;
+                        return STARTSELECT.NONESELECT;
 
                 }
             }
         }
 
-        static void Battle(Player _Player)
+        static STARTSELECT Battle(Player _Player)
         {
             //Console.WriteLine("아직 개장하지 않았습니다.");
             //Console.ReadKey();
@@ -213,16 +223,32 @@ namespace TextRpg001
             // true || false;
             // _Player.IsDeath()
 
-            while (NewMonster.IsDeath() || _Player.IsDeath())
+            while (false == NewMonster.IsDeath() && false == _Player.IsDeath())
             {
                 Console.Clear();
                 _Player.StatusRender();
                 NewMonster.StatusRender();
-                Console.ReadKey();
+
+                NewMonster.Damage(_Player);
+                if (false == NewMonster.IsDeath())
+                {
+                    _Player.Damage(NewMonster);
+                }
+            }
+            Console.WriteLine("싸움이 결판 났습니다.");
+
+            if (true == NewMonster.IsDeath())
+            {
+                Console.WriteLine("플레이어의 승리 입니다.");
+            }
+            else
+            {
+                Console.WriteLine("몬스터의 승리 입니다.");
             }
 
-            Console.WriteLine("싸움이 결판 났습니다.");
             Console.ReadKey();
+
+            return STARTSELECT.SELECTTOWN;
         }
 
         static void Main(string[] args)
@@ -240,20 +266,23 @@ namespace TextRpg001
             // 
             Player NewPlayer = new Player("플레이어");
 
+            STARTSELECT SelectCheck = STARTSELECT.NONESELECT;
+
             while (true)
             {
                 // 함수 자체의 용도를 생각해라
                 // 정말 한가지의 용도로만 사용할수 있나?
-                // 
-                STARTSELECT SelectCheck = StartSelect();
 
                 switch (SelectCheck)
                 {
+                    case STARTSELECT.NONESELECT:
+                        SelectCheck = StartSelect();
+                        break;
                     case STARTSELECT.SELECTTOWN:
-                        Town(NewPlayer);
+                        SelectCheck = Town(NewPlayer);
                         break;
                     case STARTSELECT.SELECTBATTLE:
-                        Battle(NewPlayer);
+                        SelectCheck = Battle(NewPlayer);
                         break;
                 }
             }
