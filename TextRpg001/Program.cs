@@ -31,15 +31,10 @@ class FightUnit
 
     public void StatusRender()
     {
-        Console.Write(Name);
-        Console.WriteLine("의 능력치 --------------------------");
-        Console.Write("공격력 : ");
-        Console.WriteLine(AT);
+        Console.WriteLine(Name + "의 능력치 --------------------------");
+        Console.WriteLine("공격력 : " + AT.ToString());
         // 체력 : 50/500
-        Console.Write("체력 : ");
-        Console.Write(HP);
-        Console.Write("/");
-        Console.WriteLine(MAXHP);
+        Console.WriteLine("체력 : " + HP.ToString() + "/" + MAXHP.ToString());
         Console.WriteLine("---------------------------------------");
     }
 
