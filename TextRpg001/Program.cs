@@ -15,7 +15,20 @@ class FightUnit
     protected string Name = "None";
     protected int AT = 10;
     protected int HP = 50;
-    protected int MAXHP = 100;
+    protected int m_MAXHP = 100;
+
+    public int MAXHP 
+    {
+        set 
+        {
+            m_MAXHP = value; 
+        }
+
+        get 
+        {
+            return m_MAXHP; 
+        }
+    }
 
     public bool IsDeath() 
     {
@@ -34,7 +47,7 @@ class FightUnit
         Console.WriteLine(Name + "의 능력치 --------------------------");
         Console.WriteLine("공격력 : " + AT.ToString());
         // 체력 : 50/500
-        Console.WriteLine("체력 : " + HP.ToString() + "/" + MAXHP.ToString());
+        Console.WriteLine("체력 : " + HP.ToString() + "/" + m_MAXHP.ToString());
         Console.WriteLine("---------------------------------------");
     }
 
@@ -66,7 +79,7 @@ class Player : FightUnit
     {
         // 함수는 비대하지 않을수록 좋다.
         // 10~5 짜리 함수를 
-        if (this.HP >= MAXHP)
+        if (this.HP >= m_MAXHP)
         {
             Console.WriteLine("");
             Console.WriteLine("체력이 모두 회복되어있어서 회복할 필요가 없습니다.");
@@ -75,7 +88,7 @@ class Player : FightUnit
         else
         {
             /*this.HP*/
-            HP = MAXHP;
+            HP = m_MAXHP;
             PrintHP();
         }
     }
@@ -258,8 +271,9 @@ namespace TextRpg001
             // 반복문과 조건문중
 
             // 첫번째 static
-            // 
             Player NewPlayer = new Player("플레이어");
+
+            //NewPlayer.MAXHP
 
             STARTSELECT SelectCheck = STARTSELECT.NONESELECT;
 
